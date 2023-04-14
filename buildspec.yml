@@ -38,18 +38,18 @@ phases:
       - echo "Hello, CodeBuilders!"
       - env
       - cat README.md
+      - npm install
+      - npm run test -- --coverage --watchAll=false
   #post_build:
     #commands:
       # - command
       # - command
-#reports:
-  #report-name-or-arn:
-    #files:
-      # - location
-      # - location
-    #base-directory: location
-    #discard-paths: yes
-    #file-format: JunitXml | CucumberJson
+reports:
+  arn:aws:codebuild:us-east-1:762487739742:report-group/codebuild/unittest:
+    files:
+      - "clover.xml"
+    base-directory: "./coverage"
+    file-format: CLOVERXML
 #artifacts:
   #files:
     # - location
