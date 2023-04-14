@@ -45,7 +45,7 @@ phases:
       # - command
       # - command
 reports:
-  arn:aws:codebuild:us-east-1:762487739742:report-group/codebuild/unittest:
+  unittest:
     files:
       - "clover.xml"
     base-directory: "./coverage"
