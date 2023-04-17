@@ -58,7 +58,7 @@ phases:
           --request POST  
           --header 'Authorization: Bearer ${GITHUB_PAT}'  
           --header 'Content-Type: application/octet-stream'  
-          --data-binary @\"build.zip\" ${URL_ASSET}?name=build.zip"
+          --data-binary @\"build.zip\" ${URL_ASSET}?name=build.zip
       - cat upload.json
 
   #post_build:
