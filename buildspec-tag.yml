@@ -65,12 +65,12 @@ phases:
     #commands:
       # - command
       # - command
-reports:
-  unittest:
-    files:
-      - "clover.xml"
-    base-directory: "./coverage"
-    file-format: CLOVERXML
+#reports:
+#  unittest:
+#    files:
+#      - "clover.xml"
+#    base-directory: "./coverage"
+#    file-format: CLOVERXML
 #artifacts:
   #files:
     # - location
