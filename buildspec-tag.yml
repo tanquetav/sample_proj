@@ -38,15 +38,15 @@ phases:
       - echo "Hello, CodeBuilders!"
       - npm install
       - npm run build
-      - pushd dist
+      - cd $CODEBUILD_SRC_DIR/dist
       - zip -r ../build.zip *
-      - popd
+      - cd $CODEBUILD_SRC_DIR
       - export TAG_NUMBER="$(git describe --tags --abbrev=0)"
       - echo ${TAG_NUMBER}
       - > 
           curl -s -o release.json -w "%{http_code}" 
           --request POST 
-          --header "authorization: Bearer {GITHUB_PAT}" 
+          --header "Authorization: Bearer {GITHUB_PAT}" 
           --header "Content-Type: application/json" 
           --data "{\"tag_name\": \"${TAG_NUMBER}\"}" 
           https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases
