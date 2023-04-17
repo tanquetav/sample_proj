@@ -53,13 +53,12 @@ phases:
           https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases
       - cat release.json
       - export URL_ASSET=$(jq -r .upload_url release.json | cut -d{ -f'1')
-      - echo $URL_ASSET
       - >
           curl -s -o upload.json -w "%{http_code}" 
           --request POST  
           --header "Authorization: Bearer ${GITHUB_PAT}"  
           --header "Content-Type: application/octet-stream"  
-          --data-binary @\"build.zip\" ${URL_ASSET}?name=build.zip
+          --data-binary @build.zip ${URL_ASSET}?name=build.zip
       - cat upload.json
 
   #post_build:
