@@ -39,9 +39,9 @@ phases:
       - echo "Hello, CodeBuilders!"
       - npm install
       - npm run build
-      - pushd $CODEBUILD_SRC_DIR/build
+      - cd $CODEBUILD_SRC_DIR/build
       - zip -r ../build.zip *
-      - popd
+      - cd $CODEBUILD_SRC_DIR
       - export TAG_NUMBER="$(git describe --tags --abbrev=0)"
       - echo ${TAG_NUMBER}
       - > 
