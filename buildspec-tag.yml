@@ -1,0 +1,80 @@
+version: 0.2
+
+env:
+  variables:
+     GITHUB_USER: "arqgen-george"
+     GITHUB_REPO: "sample_proj"
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+  secrets-manager:
+     GITHUB_PAT: CROSS_ROLE:GITHUB_PAT
+     # key: secret-id:json-key:version-stage:version-id
+  #exported-variables:
+     # - variable
+     # - variable
+  #git-credential-helper: yes
+#batch:
+  #fast-fail: true
+  #build-list:
+  #build-matrix:
+  #build-graph:
+phases:
+  #install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    #runtime-versions:
+      # name: version
+      # name: version
+    #commands:
+      # - command
+      # - command
+  #pre_build:
+    #commands:
+      # - command
+      # - command
+  build:
+    commands:
+      - echo "Hello, CodeBuilders!"
+      - npm install
+      - npm run build
+      - pushd dist
+      - zip -r ../build.zip *
+      - popd
+      - TAG_NUMBER="$(git describe --tags --abbrev=0)
+      - curl -s -o release.json -w '%{http_code}' \
+         --request POST \
+         --header 'authorization: Bearer ${GITHUB_PAT}' \
+         --header 'content-type: application/json' \
+         --data '{\"tag_name\": \"${TAG_NUMBER}\"}' \
+         https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases
+      - cat release.json
+      - export URL_ASSET=`jq -r .upload_url release.json | cut -d{ -f'1'`
+      - curl -s -o upload.json -w '%{http_code}' \
+         --request POST \
+         --header 'authorization: Bearer ${GITHUB_PAT}' \
+         --header 'Content-Type: application/octet-stream' \
+         --data-binary @\"build.zip\"
+         ${URL_ASSET}?name=build.zip"
+      - cat upload.json
+
+  #post_build:
+    #commands:
+      # - command
+      # - command
+reports:
+  unittest:
+    files:
+      - "clover.xml"
+    base-directory: "./coverage"
+    file-format: CLOVERXML
+#artifacts:
+  #files:
+    # - location
+    # - location
+  #name: $(date +%Y-%m-%d)
+  #discard-paths: yes
+  #base-directory: location
+cache:
+  paths:
+     - "node_modules/**/*"
