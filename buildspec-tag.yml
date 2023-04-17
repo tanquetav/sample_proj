@@ -46,7 +46,7 @@ phases:
       - > 
           curl -s -o release.json -w "%{http_code}" 
           --request POST 
-          --header "Authorization: Bearer {GITHUB_PAT}" 
+          --header "authorization: Bearer {GITHUB_PAT}" 
           --header "Content-Type: application/json" 
           --data "{\"tag_name\": \"${TAG_NUMBER}\"}" 
           https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases
