@@ -1,6 +1,7 @@
 version: 0.2
 
 env:
+  shell: bash
   variables:
      GITHUB_USER: "arqgen-george"
      GITHUB_REPO: "sample_proj"
@@ -38,15 +39,15 @@ phases:
       - echo "Hello, CodeBuilders!"
       - npm install
       - npm run build
-      - cd $CODEBUILD_SRC_DIR/build
+      - pushd $CODEBUILD_SRC_DIR/build
       - zip -r ../build.zip *
-      - cd $CODEBUILD_SRC_DIR
+      - popd
       - export TAG_NUMBER="$(git describe --tags --abbrev=0)"
       - echo ${TAG_NUMBER}
       - > 
           curl -s -o release.json -w "%{http_code}" 
           --request POST 
-          --header "Authorization: Bearer {GITHUB_PAT}" 
+          --header "Authorization: Bearer ${GITHUB_PAT}" 
           --header "Content-Type: application/json" 
           --data "{\"tag_name\": \"${TAG_NUMBER}\"}" 
           https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases
