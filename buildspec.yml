@@ -2,8 +2,7 @@ version: 0.2
 
 env:
   variables:
-     GIT_LFS_SKIP_SMUDGE: "1",
-
+     GIT_LFS_SKIP_SMUDGE: "1"
      # key: "value"
      # key: "value"
   #parameter-store:
