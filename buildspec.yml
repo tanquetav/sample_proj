@@ -8,7 +8,8 @@ env:
   #parameter-store:
      # key: "value"
      # key: "value"
-  #secrets-manager:
+  secrets-manager:
+      GITHUB_PAT: "CROSS_ROLE:GITHUB_PAT"
      # key: secret-id:json-key:version-stage:version-id
      # key: secret-id:json-key:version-stage:version-id
   #exported-variables:
@@ -38,6 +39,7 @@ phases:
     commands:
       - echo "Hello, CodeBuild!"
       - apt update && apt install -y git-lfs
+      - git config --global url."https://arqgen-george:$Env:GITHUB_PAT@github.com/arqgen-george/sample_proj.git".insteadOf https://github.com/arqgen-george/sample_proj.git
       - cat binary/file.dwg
       - git lfs pull
       - cat binary/file.dwg
