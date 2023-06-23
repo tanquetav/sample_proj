@@ -39,7 +39,7 @@ phases:
     commands:
       - echo "Hello, CodeBuild!"
       - apt update && apt install -y git-lfs
-      - git config --global url."https://arqgen-george:$Env:GITHUB_PAT@github.com/arqgen-george/sample_proj.git".insteadOf https://github.com/arqgen-george/sample_proj.git
+      - git config --global url."https://arqgen-george:$GITHUB_PAT@github.com/arqgen-george/sample_proj.git".insteadOf https://github.com/arqgen-george/sample_proj.git
       - cat binary/file.dwg
       - git lfs pull
       - cat binary/file.dwg
