@@ -5,10 +5,12 @@ env:
      GIT_LFS_SKIP_SMUDGE: "1"
   secrets-manager:
       GITHUB_PAT: "CROSS_ROLE:GITHUB_PAT"
+phases:
   build:
     commands:
       - get-content binary\\file.dwg
       - get-childitem .git
       - get-childitem .git\\lfs
+cache:
   paths:
      - ".git/lfs/objects/**/*"
