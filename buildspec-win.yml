@@ -1,0 +1,14 @@
+version: 0.2
+
+env:
+  variables:
+     GIT_LFS_SKIP_SMUDGE: "1"
+  secrets-manager:
+      GITHUB_PAT: "CROSS_ROLE:GITHUB_PAT"
+  build:
+    commands:
+      - get-content binary\\file.dwg
+      - get-childitem .git
+      - get-childitem .git\\lfs
+  paths:
+     - ".git/lfs/objects/**/*"
